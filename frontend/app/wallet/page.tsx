@@ -1,52 +1,61 @@
 "use client"
 
-import { Token } from "../components/token";
+import { useState } from "react";
+import { TokenList } from "../components/TokenList";
 import { useWallet } from "../contexts/walletContext";
+import { Swap } from "../components/Swap";
 
 export default function WalletPage() {
+  const { tokens, total } = useWallet();
+  const [activeTab, setActiveTab] = useState("tokens");
 
-  console.log("here")
-    const { tokens, total} = useWallet()
-    console.log("tokens", tokens)
-    console.log("total" , total)
-   
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 to-blue-500">
-        <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md">
-          <h1 className="text-2xl font-bold text-gray-800 text-center mb-4">
-            Your Solana Wallet
-          </h1>
-  
-          <div className="flex flex-col items-center space-y-4">
-            {/* Wallet Address Placeholder */}
-            <div className="w-full text-center">
-              <p className="text-gray-500 text-sm">Wallet Address</p>
-              <p className="text-lg font-mono text-gray-700 break-all bg-gray-100 px-4 py-2 rounded-lg">
-                3fJv...aB7c
-              </p>
-            </div>
-  
-            {/* Balance Section */}
-            <div className="w-full text-center">
-              <p className="text-gray-500 text-sm">Total Balance</p>
-              <p className="text-3xl font-bold text-gray-800">◎ {total} USD</p>
-            </div>
-  
-            {/* Token List Placeholder */}
-            <div className="w-full">
-              <p className="text-gray-500 text-sm mb-2">Your Tokens</p>
-              <div className="bg-gray-100 p-3 rounded-lg space-y-2">
-                {tokens?(tokens.map((token: any) => (<Token name={token.name} balance={token.balance}/>))):(<div>no tokens to show</div>)}
-              </div>
-            </div>
-  
-            {/* Connect Wallet Button */}
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition">
-              Connect Wallet
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black to-gray-900 p-6">
+      <div className="bg-white/10 backdrop-blur-lg shadow-lg border border-white/20 rounded-3xl p-6 w-full max-w-lg">
+        <h1 className="text-3xl font-bold text-white text-center mb-6">Your Solana Wallet</h1>
+
+        {/* Wallet Address Section */}
+        <div className="w-full text-center mb-6">
+          <p className="text-gray-300 text-sm">Wallet Address</p>
+          <p className="text-lg font-mono text-white break-all bg-white/10 px-4 py-2 rounded-lg border border-white/20">
+            3fJv...aB7c
+          </p>
+        </div>
+
+        {/* Balance Section */}
+        <div className="w-full text-center mb-6">
+          <p className="text-gray-300 text-sm">Total Balance</p>
+          <p className="text-4xl font-bold text-green-400">◎ {total} USD</p>
+        </div>
+
+        {/* Tab Navigation */}
+        <div className="flex space-x-2 mb-6">
+          {[
+            { id: "tokens", label: "Tokens" },
+            { id: "swap", label: "Swap" },
+            { id: "addFunds", label: "Add Funds" },
+            { id: "withdraw", label: "Withdraw" },
+          ].map(({ id, label }) => (
+            <button
+              key={id}
+              onClick={() => setActiveTab(id)}
+              className={`flex-1 py-2 text-sm font-semibold rounded-lg transition duration-300 ${
+                activeTab === id
+                  ? "bg-green-500 text-white shadow-lg"
+                  : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+              }`}
+            >
+              {label}
             </button>
-          </div>
+          ))}
+        </div>
+
+        {/* Tab Content */}
+        <div className="min-h-[220px] flex items-center justify-center bg-white/10 rounded-xl p-6 border border-white/20">
+          {activeTab === "tokens" && <TokenList tokens={tokens} />}
+          {activeTab === "swap" && <Swap />}
         </div>
       </div>
-    );
-  }
-  
+    </div>
+  );
+}

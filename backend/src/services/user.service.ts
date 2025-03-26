@@ -18,7 +18,7 @@ export interface IUser {
 
 export interface Wallet { 
     inrWallet: {balance: number },
-    solWallet: {publicKey: string}
+    solWallet: {publicKey: string, privateKey: string}
 }
 
 
@@ -92,7 +92,7 @@ export class UserService implements IUserService {
         try { 
             const inrWallet = await client.inrWallet.findUnique({where: {userId: userId}})
             const solWallet = await client.solWallet.findUnique({where: { userId: userId}})
-            return { inrWallet: { balance: inrWallet?.balance?? 0}, solWallet: { publicKey: solWallet?.publicKey?? ""}}
+            return { inrWallet: { balance: inrWallet?.balance?? 0}, solWallet: { publicKey: solWallet?.publicKey?? "", privateKey: solWallet?.privateKey?? ""}}
         } catch(error) { 
             throw error
         }
