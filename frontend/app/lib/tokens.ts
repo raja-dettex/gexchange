@@ -15,7 +15,7 @@ export const SUPPORTED_TOKENS: TokenDetails[] = [{
     native: true,
     price: "180",
     image: "https://upload.wikimedia.org/wikipedia/commons/3/34/Solana_cryptocurrency_two.jpg",
-    decimals: 9
+    decimals: 9,
 }, {
     name: "USDC",
     mint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",

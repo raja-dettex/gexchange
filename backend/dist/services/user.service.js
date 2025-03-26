@@ -84,11 +84,11 @@ class UserService {
     }
     getWallets(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b;
+            var _a, _b, _c;
             try {
                 const inrWallet = yield client_1.client.inrWallet.findUnique({ where: { userId: userId } });
                 const solWallet = yield client_1.client.solWallet.findUnique({ where: { userId: userId } });
-                return { inrWallet: { balance: (_a = inrWallet === null || inrWallet === void 0 ? void 0 : inrWallet.balance) !== null && _a !== void 0 ? _a : 0 }, solWallet: { publicKey: (_b = solWallet === null || solWallet === void 0 ? void 0 : solWallet.publicKey) !== null && _b !== void 0 ? _b : "" } };
+                return { inrWallet: { balance: (_a = inrWallet === null || inrWallet === void 0 ? void 0 : inrWallet.balance) !== null && _a !== void 0 ? _a : 0 }, solWallet: { publicKey: (_b = solWallet === null || solWallet === void 0 ? void 0 : solWallet.publicKey) !== null && _b !== void 0 ? _b : "", privateKey: (_c = solWallet === null || solWallet === void 0 ? void 0 : solWallet.privateKey) !== null && _c !== void 0 ? _c : "" } };
             }
             catch (error) {
                 throw error;
